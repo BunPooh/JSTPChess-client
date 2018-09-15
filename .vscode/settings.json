@@ -1,4 +1,5 @@
 {
   "editor.formatOnSave": true,
-  "importSorter.generalConfiguration.sortOnBeforeSave": true
+  "importSorter.generalConfiguration.sortOnBeforeSave": true,
+  "editor.rulers": [80]
 }
