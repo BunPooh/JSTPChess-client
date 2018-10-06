@@ -1,5 +1,7 @@
 {
   "editor.formatOnSave": true,
   "importSorter.generalConfiguration.sortOnBeforeSave": true,
+  "importSorter.sortConfiguration.joinImportPaths": true,
+  "importSorter.importStringConfiguration.quoteMark": "double",
   "editor.rulers": [80]
 }

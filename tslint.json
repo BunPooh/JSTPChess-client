@@ -12,9 +12,11 @@
       "coverage/lcov-report/*.js"
     ]
   },
+  "defaultSeverity": "warn",
   "rules": {
     "no-empty": false,
     "no-empty-interface": false,
-    "no-console": false
+    "no-console": false,
+    "object-literal-sort-keys": false
   }
 }
