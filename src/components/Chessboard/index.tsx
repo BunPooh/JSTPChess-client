@@ -58,9 +58,9 @@ export default class Chessboard extends React.Component<
 
     if (this.chessboard) {
       window.addEventListener("resize", this.onWindowResize);
-      this.chessboard.start();
-      this.updatePosition();
-      this.updateStatus();
+
+      // initialize or load chessboard
+      this.componentDidUpdate();
     }
   }
 

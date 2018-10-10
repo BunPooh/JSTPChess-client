@@ -1,11 +1,14 @@
-import './App.css';
+import "./App.css";
 
-import * as React from 'react';
-import { Link, Route } from 'react-router-dom';
+import * as React from "react";
+import { Link, Route, Switch } from "react-router-dom";
 
+import { routes } from "./router/config";
+import Home from "./views/Home";
 // import logoSvg from './logo.svg';
-import Lobby from './views/Lobby';
-import Room from './views/Room';
+import Lobby from "./views/Lobby";
+import NotFound from "./views/NotFound";
+import Room from "./views/Room";
 
 class App extends React.Component {
   public handleClick = () => {
@@ -15,25 +18,26 @@ class App extends React.Component {
   public render() {
     return (
       <div className="App">
-        {/* <header className="App-header">
-          <img src={logoSvg} className="App-logo" alt="logo" />
-          <h1 className="App-title" onClick={this.handleClick}>
-            Welcome to React
-          </h1>
-        </header> */}
         <p className="App-intro">Welcome to React</p>
         <ul>
           <li>
-            <Link to="/">Lobby</Link>
+            <Link to={routes.home}>Home</Link>
           </li>
           <li>
-            <Link to="/room">Room</Link>
+            <Link to={routes.lobby}>Lobby</Link>
+          </li>
+          <li>
+            <Link to={routes.room}>Room</Link>
           </li>
         </ul>
 
         <div>
-          <Route exact={true} path="/" component={Lobby} />
-          <Route path="/room" component={Room} />
+          <Switch>
+            <Route exact={true} path={routes.home} component={Home} />
+            <Route path={routes.lobby} component={Lobby} />
+            <Route path={routes.room} component={Room} />
+            <Route component={NotFound} />
+          </Switch>
         </div>
       </div>
     );
