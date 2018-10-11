@@ -12,10 +12,14 @@ import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import { RoomStore } from "./store/RoomStore";
 import { UserStore } from "./store/UserStore";
+import { WsStore } from "./store/WsStore";
+
+const wsStore = new WsStore();
 
 const stores = {
+  wsStore,
   userStore: new UserStore(),
-  roomStore: new RoomStore(),
+  roomStore: new RoomStore(wsStore),
   routerStore: new RouterStore()
 };
 

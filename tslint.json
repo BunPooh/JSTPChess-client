@@ -16,7 +16,9 @@
   "rules": {
     "no-empty": false,
     "no-empty-interface": false,
-    "no-console": false,
+    "no-unused-variable": true,
+    // "no-console": false,
+    "function-name": false,
     "object-literal-sort-keys": false
   }
 }
