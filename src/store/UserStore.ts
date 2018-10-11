@@ -1,18 +1,30 @@
 import { action, computed, observable } from "mobx";
 
-export interface IUser {
-  uid: string;
-  name: string;
-}
-
-export type ProviderType = "google" | "facebook";
+import { AuthService, ProviderType, User } from "../services/auth";
 
 export class UserStore {
   @observable
-  public user?: IUser;
+  public user?: User;
 
   @observable
   public token?: string;
+
+  private authService: AuthService;
+
+  constructor(authService: AuthService) {
+    this.authService = authService;
+    this.authService.onAuthStateChanged(async (authUser: User) => {
+      console.log("firebase auth service state changed", authUser);
+
+      this.setUser(authUser);
+      if (authUser) {
+        const token = await this.authService.getTokenId();
+        this.setToken(token);
+      } else {
+        this.setToken(undefined);
+      }
+    });
+  }
 
   @computed
   public get isAuthenticated() {
@@ -20,16 +32,20 @@ export class UserStore {
   }
 
   @action
-  public setUser(user?: IUser) {
+  public setUser(user?: User) {
     this.user = user;
   }
 
   @action
-  public setToken(token: string) {
+  public setToken(token?: string) {
     this.token = token;
   }
 
-  public async signInWithProvider(provider: ProviderType) {}
+  public async signInWithProvider(provider: ProviderType) {
+    await this.authService.signInWithProvider(provider);
+  }
 
-  public async signOut() {}
+  public async signOut() {
+    await this.authService.signOut();
+  }
 }

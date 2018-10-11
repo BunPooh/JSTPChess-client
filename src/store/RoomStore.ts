@@ -1,6 +1,6 @@
 import { action, observable } from "mobx";
 
-import { IUser } from "./UserStore";
+import { IUser } from "../services/auth";
 import { WsStore } from "./WsStore";
 
 export type PlayerColor = "w" | "b";

@@ -16,7 +16,7 @@ class App extends React.Component<IComponentProps> {
   public render() {
     return (
       <div className="App">
-        <WebsocketConnection />
+        {/* <WebsocketConnection /> */}
         <p className="App-intro">Welcome to React</p>
         <ul>
           <li>

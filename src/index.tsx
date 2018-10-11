@@ -10,15 +10,17 @@ import { Router } from "react-router";
 
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
+import { AuthService } from "./services/auth";
 import { RoomStore } from "./store/RoomStore";
 import { UserStore } from "./store/UserStore";
 import { WsStore } from "./store/WsStore";
 
+const authService = new AuthService();
 const wsStore = new WsStore();
 
 const stores = {
   wsStore,
-  userStore: new UserStore(),
+  userStore: new UserStore(authService),
   roomStore: new RoomStore(wsStore),
   routerStore: new RouterStore()
 };
