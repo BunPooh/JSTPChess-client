@@ -5,19 +5,18 @@ import { Link, Route, Switch } from "react-router-dom";
 
 import { routes } from "./router/config";
 import Home from "./views/Home";
-// import logoSvg from './logo.svg';
 import Lobby from "./views/Lobby";
 import NotFound from "./views/NotFound";
 import Room from "./views/Room";
+import { WebsocketConnection } from "./views/WebsocketConnection";
 
-class App extends React.Component {
-  public handleClick = () => {
-    console.log(this);
-  };
+interface IComponentProps {}
 
+class App extends React.Component<IComponentProps> {
   public render() {
     return (
       <div className="App">
+        <WebsocketConnection />
         <p className="App-intro">Welcome to React</p>
         <ul>
           <li>

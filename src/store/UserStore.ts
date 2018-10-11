@@ -1,9 +1,11 @@
-import { action, observable } from "mobx";
+import { action, computed, observable } from "mobx";
 
 export interface IUser {
   uid: string;
   name: string;
 }
+
+export type ProviderType = "google" | "facebook";
 
 export class UserStore {
   @observable
@@ -11,6 +13,11 @@ export class UserStore {
 
   @observable
   public token?: string;
+
+  @computed
+  public get isAuthenticated() {
+    return this.user && this.token ? true : false;
+  }
 
   @action
   public setUser(user?: IUser) {
@@ -21,4 +28,8 @@ export class UserStore {
   public setToken(token: string) {
     this.token = token;
   }
+
+  public async signInWithProvider(provider: ProviderType) {}
+
+  public async signOut() {}
 }
