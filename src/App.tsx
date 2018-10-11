@@ -1,4 +1,5 @@
 import "./App.css";
+import "antd/dist/antd.css";
 
 import * as React from "react";
 import { Link, Route, Switch } from "react-router-dom";
@@ -30,7 +31,6 @@ class App extends React.Component {
             <Link to={routes.room}>Room</Link>
           </li>
         </ul>
-
         <div>
           <Switch>
             <Route exact={true} path={routes.home} component={Home} />

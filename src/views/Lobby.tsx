@@ -1,3 +1,6 @@
+import "./Lobby.css";
+
+import { Button } from "antd";
 import { inject, observer } from "mobx-react";
 import { RouterStore } from "mobx-react-router";
 import * as React from "react";
@@ -26,7 +29,9 @@ export default class Lobby extends React.Component<IComponentProps, {}> {
     return (
       <div>
         <h2>Our Lobby</h2>
-        <button onClick={this.enterRoom}>Enter room (local)</button>
+        <Button type="primary" onClick={this.enterRoom}>
+          Enter room (Local)
+        </Button>
       </div>
     );
   }
