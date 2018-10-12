@@ -1,6 +1,14 @@
+/* tslint:disable */
+/**
+ * Organize css inclusion order:
+ * the order matters and should not be sorted alphabetically
+ */
+import "reflect-metadata";
 import "bootstrap/dist/css/bootstrap.css";
+import "antd/dist/antd.css";
 import "./index.css";
 
+/* tslint:enable */
 import { createBrowserHistory } from "history";
 import { Provider } from "mobx-react";
 import { RouterStore, syncHistoryWithStore } from "mobx-react-router";
@@ -24,6 +32,10 @@ const stores = {
   roomStore: new RoomStore(wsStore),
   routerStore: new RouterStore()
 };
+
+if (!stores.userStore.user) {
+  stores.userStore.initializeFromLocalStorage();
+}
 
 const browserHistory = createBrowserHistory();
 const history = syncHistoryWithStore(browserHistory, stores.routerStore);

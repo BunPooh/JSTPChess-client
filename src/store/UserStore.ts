@@ -1,6 +1,9 @@
+import { plainToClass } from "class-transformer";
 import { action, computed, observable } from "mobx";
 
 import { AuthService, ProviderType, User } from "../services/auth";
+
+const LOCAL_STORAGE_USER = "@@userStore/user";
 
 export class UserStore {
   @observable
@@ -34,6 +37,11 @@ export class UserStore {
   @action
   public setUser(user?: User) {
     this.user = user;
+    if (this.user) {
+      localStorage.setItem(LOCAL_STORAGE_USER, JSON.stringify(this.user));
+    } else {
+      localStorage.removeItem(LOCAL_STORAGE_USER);
+    }
   }
 
   @action
@@ -47,5 +55,15 @@ export class UserStore {
 
   public async signOut() {
     await this.authService.signOut();
+  }
+
+  public initializeFromLocalStorage() {
+    const userStringified = localStorage.getItem(LOCAL_STORAGE_USER);
+    if (userStringified) {
+      try {
+        const userPlain: object = JSON.parse(userStringified);
+        this.setUser(plainToClass(User, userPlain));
+      } catch (err) {}
+    }
   }
 }
