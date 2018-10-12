@@ -1,0 +1,34 @@
+.Home {
+  min-height: 100vh;
+  padding-top: 0;
+}
+
+@media screen and (max-height: 500px) {
+  .Home {
+    padding-top: 50px;
+  }
+}
+
+.title-style1 {
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 1.75em;
+}
+
+.Home .btn-login {
+  width: 90%;
+}
+
+.profile-name {
+  font-size: 1.5em;
+  font-weight: 300;
+  margin-bottom: 4px;
+}
+
+.profile-email {
+  font-weight: 300;
+}
+
+.logout {
+  width: 100%;
+}

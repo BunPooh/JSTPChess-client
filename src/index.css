@@ -3,3 +3,25 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.vh-full {
+  height: 100vh;
+}
+
+.login-google {
+  background: #ff7272 !important;
+  color: #fff !important;
+}
+
+.login-facebook {
+  background: #1890ff !important;
+  color: #fff !important;
+}
+
+.btn {
+  border-radius: 0;
+}
+
+.piece-417db {
+  z-index: 100;
+}

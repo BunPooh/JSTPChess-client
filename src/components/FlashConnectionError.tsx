@@ -5,7 +5,7 @@ import * as React from "react";
 export type FlashType = "warn" | "error";
 
 export function FlashConnectionError(props: { message?: string }) {
-  const className = "flash flash-error flash-fixed text-center";
+  const className = "flash flash-error flash-absolute text-center";
   // if (props.type) {
   //   className += ` flash-${props.type}`;
   // }
