@@ -1,28 +1,58 @@
-import { Button, Card } from "antd";
+import { Alert, Button, Card } from "antd";
+import { inject, observer } from "mobx-react";
 import * as React from "react";
+import { FormattedMessage } from "react-intl";
+import { IAuthError } from "src/services/auth";
+import { LocaleStore } from "src/store/LocaleStore";
 import { UserStore } from "src/store/UserStore";
 
 interface IComponentProps {
   userStore: UserStore;
+  localeStore?: LocaleStore;
 }
 
-export default class HomeVisitor extends React.Component<IComponentProps> {
+interface IComponentState {
+  authErrorCode?: string;
+}
+
+@inject("localeStore")
+export default class HomeVisitor extends React.Component<
+  IComponentProps,
+  IComponentState
+> {
+  constructor(props: IComponentProps) {
+    super(props);
+
+    this.state = {
+      authErrorCode: undefined
+    };
+  }
+
+  public changeLocaleEn = () => {
+    this.props.localeStore!.setLocale("en");
+  };
+
+  public changeLocaleFr = () => {
+    this.props.localeStore!.setLocale("fr");
+  };
+
   public render() {
     return (
       <div className="Home row d-flex justify-content-center align-items-center">
         <Card className="col-12 col-sm-11 col-md-10 col-lg-8">
           <div className="row">
             <div className="col-12 col-sm-6 col-md-8">
-              <h2 className="title-style1 text-center">About</h2>
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Repellat atque sint dolor accusantium quisquam porro. Eius sequi
-                error pariatur non explicabo, molestias doloremque dolore!
-                Laudantium recusandae eum perferendis odit magnam!
+              <h2 className="title-style1 text-center">
+                <FormattedMessage id="about.title" />
+              </h2>
+              <p className="text-center text-sm-left">
+                <FormattedMessage id="about.content" />
               </p>
             </div>
             <div className="col-12 col-sm-6 col-md-4 d-flex flex-column align-items-center">
-              <h2 className="title-style1">Play now</h2>
+              <h2 className="title-style1">
+                <FormattedMessage id="title.playNow" />
+              </h2>
               <Button
                 type="danger"
                 className="btn-danger btn btn-sm login-google btn-login my-2"
@@ -41,17 +71,18 @@ export default class HomeVisitor extends React.Component<IComponentProps> {
             </div>
           </div>
 
-          {/* <ul>
-            <li>
-              <Link to={routes.home}>Home</Link>
-            </li>
-            <li>
-              <Link to={routes.lobby}>Lobby</Link>
-            </li>
-            <li>
-              <Link to={routes.room}>Room</Link>
-            </li>
-          </ul> */}
+          <div className="row">
+            <div className="col-12">
+              {this.state.authErrorCode ? (
+                <Alert
+                  className="mt-3"
+                  message={this.state.authErrorCode}
+                  type="error"
+                  showIcon={true}
+                />
+              ) : null}
+            </div>
+          </div>
         </Card>
       </div>
     );
@@ -60,16 +91,28 @@ export default class HomeVisitor extends React.Component<IComponentProps> {
   private handleGoogleLogin = async () => {
     try {
       await this.props.userStore.signInWithProvider("google");
+      this.setState({
+        authErrorCode: undefined
+      });
     } catch (err) {
-      console.error("google login", err);
+      const authError = err as IAuthError;
+      this.setState({
+        authErrorCode: authError.code
+      });
     }
   };
 
   private handleFacebookLogin = async () => {
     try {
       await this.props.userStore.signInWithProvider("facebook");
+      this.setState({
+        authErrorCode: undefined
+      });
     } catch (err) {
-      console.error("facebook login", err);
+      const authError = err as IAuthError;
+      this.setState({
+        authErrorCode: authError.code
+      });
     }
   };
 }

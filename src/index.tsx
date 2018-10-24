@@ -17,17 +17,24 @@ import * as ReactDOM from "react-dom";
 import { Router } from "react-router";
 
 import App from "./App";
+import { LocaleProvider } from "./components/LocaleProvider";
+import { loadTranslations } from "./i18n";
 import registerServiceWorker from "./registerServiceWorker";
 import { AuthService } from "./services/auth";
+import { LocaleStore } from "./store/LocaleStore";
 import { RoomStore } from "./store/RoomStore";
 import { UserStore } from "./store/UserStore";
 import { WsStore } from "./store/WsStore";
 
+const translations = loadTranslations();
+
+const localeStore = new LocaleStore(translations);
 const authService = new AuthService();
 const wsStore = new WsStore();
 
 const stores = {
   wsStore,
+  localeStore,
   userStore: new UserStore(authService),
   roomStore: new RoomStore(wsStore),
   routerStore: new RouterStore()
@@ -42,9 +49,11 @@ const history = syncHistoryWithStore(browserHistory, stores.routerStore);
 
 ReactDOM.render(
   <Provider {...stores}>
-    <Router history={history}>
-      <App />
-    </Router>
+    <LocaleProvider localeStore={localeStore}>
+      <Router history={history}>
+        <App />
+      </Router>
+    </LocaleProvider>
   </Provider>,
   document.getElementById("root") as HTMLElement
 );

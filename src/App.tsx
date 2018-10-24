@@ -7,6 +7,7 @@ import { Background } from "./components/Background";
 import { routes } from "./router/config";
 import Home from "./views/Home";
 import Lobby from "./views/Lobby";
+import { Navbar } from "./views/Navbar";
 import NotFound from "./views/NotFound";
 import Room from "./views/Room";
 import { WebsocketConnection } from "./views/WebsocketConnection";
@@ -19,6 +20,8 @@ class App extends React.Component<IComponentProps> {
       <div className="App">
         <Background />
         <div className="App-content">
+          <Navbar />
+
           {/* <WebsocketConnection /> */}
           <Switch>
             <Route exact={true} path={routes.home} component={Home} />

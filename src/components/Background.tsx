@@ -12,6 +12,7 @@ export function Background(props: { message?: string }) {
     <div className="background">
       <div className="background-effect background-image" style={style} />
       <div className="background-effect background-overlay" />
+      <div className="background-effect background-shadow-gradient-top" />
       <div className="background-effect background-shadow-gradient" />
     </div>
   );
