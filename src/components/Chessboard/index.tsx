@@ -3,6 +3,7 @@ import "./index.css";
 
 import * as chess from "chess.js";
 import * as chessboardjs from "chessboardjs";
+import * as PropTypes from "prop-types";
 import * as React from "react";
 
 import * as pieces from "./chesspieces/wikipedia";
@@ -27,6 +28,13 @@ export default class Chessboard extends React.Component<
   IComponentProps,
   IComponentState
 > {
+  public static propTypes = {
+    pgn: PropTypes.string,
+    playerColor: PropTypes.string.isRequired,
+    onChangePositions: PropTypes.func.isRequired,
+    onChangeStatus: PropTypes.func
+  };
+
   public game!: ChessInstance;
   public chessboard?: ChessBoardInstance;
   public chessboardRef: React.RefObject<HTMLDivElement>;

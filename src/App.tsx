@@ -1,15 +1,15 @@
 import "./App.css";
 
 import * as React from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import { Background } from "./components/Background";
 import { routes } from "./router/config";
-import Home from "./views/Home";
-import Lobby from "./views/Lobby";
-import { Navbar } from "./views/Navbar";
+import Home from "./views/home/Home";
+import Lobby from "./views/lobby/Lobby";
+import { Navbar } from "./views/navbar/Navbar";
 import NotFound from "./views/NotFound";
-import Room from "./views/Room";
+import Room from "./views/room/Room";
 import { WebsocketConnection } from "./views/WebsocketConnection";
 
 interface IComponentProps {}
@@ -20,9 +20,11 @@ class App extends React.Component<IComponentProps> {
       <div className="App">
         <Background />
         <div className="App-content">
-          <Navbar />
+          <div className="App-top">
+            {/* <WebsocketConnection /> */}
+            <Navbar />
+          </div>
 
-          {/* <WebsocketConnection /> */}
           <Switch>
             <Route exact={true} path={routes.home} component={Home} />
             <Route path={routes.lobby} component={Lobby} />

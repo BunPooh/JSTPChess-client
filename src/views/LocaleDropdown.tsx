@@ -1,5 +1,6 @@
 import { Button, Dropdown, Menu, message } from "antd";
 import { inject } from "mobx-react";
+import * as PropTypes from "prop-types";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import { LocaleStore } from "src/store/LocaleStore";
@@ -12,6 +13,12 @@ interface IComponentProps {
 
 @inject("localeStore")
 export class LocaleDropdown extends React.Component<IComponentProps> {
+  public static propTypes = {
+    localeStore: PropTypes.instanceOf(LocaleStore).isRequired,
+    className: PropTypes.string,
+    menuClassName: PropTypes.string
+  };
+
   constructor(props: IComponentProps) {
     super(props);
   }
@@ -38,7 +45,9 @@ export class LocaleDropdown extends React.Component<IComponentProps> {
         placement="bottomRight"
         className={this.props.className}
       >
-        <Button>Locales</Button>
+        <Button>
+          <FormattedMessage id="locales.title" />
+        </Button>
       </Dropdown>
     );
   }

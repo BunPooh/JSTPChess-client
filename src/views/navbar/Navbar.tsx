@@ -2,7 +2,8 @@ import "./Navbar.css";
 
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { LocaleDropdown } from "src/views/LocaleDropdown";
+
+import { LocaleDropdown } from "../LocaleDropdown";
 
 export const Navbar = () => {
   return (

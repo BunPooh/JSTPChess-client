@@ -1,25 +1,26 @@
 import { Alert, Button, Card } from "antd";
-import { inject, observer } from "mobx-react";
+import * as PropTypes from "prop-types";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 import { IAuthError } from "src/services/auth";
-import { LocaleStore } from "src/store/LocaleStore";
 import { UserStore } from "src/store/UserStore";
 
 interface IComponentProps {
   userStore: UserStore;
-  localeStore?: LocaleStore;
 }
 
 interface IComponentState {
   authErrorCode?: string;
 }
 
-@inject("localeStore")
 export default class HomeVisitor extends React.Component<
   IComponentProps,
   IComponentState
 > {
+  public static propTypes = {
+    userStore: PropTypes.instanceOf(UserStore).isRequired
+  };
+
   constructor(props: IComponentProps) {
     super(props);
 
@@ -27,14 +28,6 @@ export default class HomeVisitor extends React.Component<
       authErrorCode: undefined
     };
   }
-
-  public changeLocaleEn = () => {
-    this.props.localeStore!.setLocale("en");
-  };
-
-  public changeLocaleFr = () => {
-    this.props.localeStore!.setLocale("fr");
-  };
 
   public render() {
     return (
@@ -76,7 +69,11 @@ export default class HomeVisitor extends React.Component<
               {this.state.authErrorCode ? (
                 <Alert
                   className="mt-3"
-                  message={this.state.authErrorCode}
+                  message={
+                    <FormattedMessage
+                      id={`firebase.${this.state.authErrorCode}`}
+                    />
+                  }
                   type="error"
                   showIcon={true}
                 />
@@ -91,9 +88,6 @@ export default class HomeVisitor extends React.Component<
   private handleGoogleLogin = async () => {
     try {
       await this.props.userStore.signInWithProvider("google");
-      this.setState({
-        authErrorCode: undefined
-      });
     } catch (err) {
       const authError = err as IAuthError;
       this.setState({
@@ -105,9 +99,6 @@ export default class HomeVisitor extends React.Component<
   private handleFacebookLogin = async () => {
     try {
       await this.props.userStore.signInWithProvider("facebook");
-      this.setState({
-        authErrorCode: undefined
-      });
     } catch (err) {
       const authError = err as IAuthError;
       this.setState({

@@ -1,7 +1,19 @@
 {
   "about.title": "About",
-  "about.content": "My content in english",
+  "about.content": "A basic chess game for our FullstackJS School Project",
   "title.playNow": "Play now",
   "locale.english": "English",
-  "locale.french": "French"
+  "locale.french": "French",
+  "locales.title": "Languages",
+  "firebase.auth/account-exists-with-different-credential": "Account with the same credentials already exists",
+  "firebase.auth/popup-closed-by-user": "Authentication failed: popup was canceled by user",
+  "firebase.auth/cancelled-popup-request": "Authentication failed: popup was canceled",
+  "firebase.auth/popup-blocked": "Authentication failed: popup was blocked",
+  "firebase.auth/unauthorized-domain": "Authentication failed: unauthorized domain",
+  "firebase.auth/operation-not-allowed": "Authentication failed: operation not allowed",
+  "connection.ws/disconnect": "Disconnected from server",
+  "connection.ws/connect_error": "Could not connect to server",
+  "connection.ws/connect_retry": "Retry connecting to server...",
+  "logout": "Logout",
+  "lobby.title": "Lobby"
 }

@@ -1,5 +1,6 @@
 import { inject, observer } from "mobx-react";
 import * as React from "react";
+import { FormattedMessage } from "react-intl";
 
 import { FlashConnectionError } from "../components/FlashConnectionError";
 import { WsStore } from "../store/WsStore";
@@ -24,9 +25,16 @@ export class WebsocketConnection extends React.Component<IComponentProps> {
   }
 
   public render() {
+    const code = this.props.wsStore!.connectionError;
+    const message = code ? (
+      <FormattedMessage id={`connection.${code}`} />
+    ) : (
+      undefined
+    );
+
     return (
       <div>
-        <FlashConnectionError message={this.props.wsStore!.connectionError} />
+        <FlashConnectionError message={message} />
       </div>
     );
   }
