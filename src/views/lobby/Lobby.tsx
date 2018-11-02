@@ -1,6 +1,6 @@
 import "./Lobby.css";
 
-import { Card,  } from "antd";
+import { Card } from "antd";
 import { inject, observer } from "mobx-react";
 import { RouterStore } from "mobx-react-router";
 import * as PropTypes from "prop-types";
@@ -11,7 +11,7 @@ import { routes } from "src/router/config";
 import { RoomStore } from "src/store/RoomStore";
 import { UserStore } from "src/store/UserStore";
 
-import { RoomTable } from "./RoomTable";
+import { LobbyTable } from "./LobbyTable";
 
 interface IComponentProps {
   roomStore: RoomStore;
@@ -49,17 +49,29 @@ export default class Lobby extends React.Component<IComponentProps, {}> {
       {
         uid: "3",
         name: "3"
+      },
+      {
+        uid: "4",
+        name: "4"
+      },
+      {
+        uid: "5",
+        name: "5"
+      },
+      {
+        uid: "6",
+        name: "6"
       }
     ];
 
     return (
       <div className="Lobby row d-flex justify-content-center align-items-center">
-        <Card className="col-12 col-sm-11 col-md-10 col-lg-8">
+        <Card className="col-12 col-sm-11 col-md-10 col-lg-8 mb-4">
           <div>
             <h2 className="title-style1 text-center mb-4">
               <FormattedMessage id="lobby.title" />
             </h2>
-            <RoomTable data={data} />
+            <LobbyTable data={data} />
             <button onClick={this.enterRoom}>Enter room (local)</button>
             <Link to="/">Home</Link>
           </div>
