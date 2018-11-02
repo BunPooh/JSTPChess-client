@@ -1,0 +1,19 @@
+{
+  "about.title": "A propos",
+  "about.content": "Un jeu d'échec basique pour le projet d'école FullstackJS",
+  "title.playNow": "Jouer",
+  "locale.english": "Anglais",
+  "locale.french": "Francais",
+  "locales.title": "Languages",
+  "firebase.auth/account-exists-with-different-credential": "Un compte avec les même identifiants existes déjà",
+  "firebase.auth/popup-closed-by-user": "Authentication a échoué: la fenêtre de connexion a été annulé par l'utilisateur",
+  "firebase.auth/cancelled-popup-request": "Authentication a échoué: la fenêtre de connexion a été annulé",
+  "firebase.auth/popup-blocked": "Authentication a échoué: la fenêtre de connexion a été blocké",
+  "firebase.auth/unauthorized-domain": "Authentication a échoué: domaine non autorisé",
+  "firebase.auth/operation-not-allowed": "Authentication a échoué: operation non permise",
+  "connection.ws/disconnect": "Déconnecté du serveur",
+  "connection.ws/connect_error": "La connection au serveur a échoué",
+  "connection.ws/connect_retry": "La connection au serveur a échoué, nouvelle tentative de connection...",
+  "logout": "Déconnection",
+  "lobby.title": "Lobby"
+}

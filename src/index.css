@@ -25,3 +25,7 @@ body {
 .piece-417db {
   z-index: 100;
 }
+
+.ant-alert {
+  border-radius: 0;
+}

@@ -17,8 +17,9 @@
     "no-empty": false,
     "no-empty-interface": false,
     "no-unused-variable": true,
-    // "no-console": false,
+    "no-console": [true, "log"], // only allow warn and error
     "function-name": false,
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "variable-name": false
   }
 }

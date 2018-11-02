@@ -1,16 +1,22 @@
 import { Avatar, Button, Card } from "antd";
 import { computed } from "mobx";
+import * as PropTypes from "prop-types";
 import * as React from "react";
+import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
-import { routes } from "../router/config";
-import { UserStore } from "../store/UserStore";
+import { routes } from "../../router/config";
+import { UserStore } from "../../store/UserStore";
 
 interface IComponentProps {
   userStore: UserStore;
 }
 
 export default class HomeUser extends React.Component<IComponentProps> {
+  public static propTypes = {
+    userStore: PropTypes.instanceOf(UserStore).isRequired
+  };
+
   @computed
   private get user() {
     return this.props.userStore.user;
@@ -37,13 +43,15 @@ export default class HomeUser extends React.Component<IComponentProps> {
             <div className="col-12 col-sm-5 d-flex my-3 justify-content-sm-end">
               <div>
                 <Button type="primary" className="btn btn-sm logout mb-2">
-                  <Link to={routes.lobby}>Lobby</Link>
+                  <Link to={routes.lobby}>
+                    <FormattedMessage id="lobby.title" />
+                  </Link>
                 </Button>
                 <Button
                   className="btn btn-sm logout"
                   onClick={this.handleLogout}
                 >
-                  Logout
+                  <FormattedMessage id="logout" />
                 </Button>
               </div>
             </div>

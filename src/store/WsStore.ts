@@ -37,29 +37,23 @@ export class WsStore {
       }
     });
 
-    this.socket.on("error", (e: any) => {
-      console.log("error", e);
-      // this.setConnectionError(undefined);
-    });
+    this.socket.on("error", () => {});
     this.socket.on("connect", (e: any) => {
       this.setConnectionError(undefined);
     });
     this.socket.on("disconnect", (e: any) => {
-      console.log("disconnected");
-      this.setConnectionError("Disconnected from server");
+      this.setConnectionError("ws/disconnect");
     });
     this.socket.on("connect_error", (e: any) => {
-      console.log("connect_error");
-      this.setConnectionError("Could not connect to server");
+      this.setConnectionError("ws/connect_error");
     });
     this.socket.on("connect_timeout", (e: any) => {
-      console.log("connect_timeout");
-      this.setConnectionError("Could not connect to server");
+      this.setConnectionError("ws/connect_error");
     });
     this.socket.on("reconnect_attempt", (e: any) => {
-      console.log("reconnect_attempt");
-      this.setConnectionError("Trying to reconnect...");
+      this.setConnectionError("ws/connect_retry");
     });
+    this.socket.on("reconnect_error", () => {});
   }
 
   public on(type: string, fn: (...args: any[]) => void) {

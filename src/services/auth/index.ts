@@ -11,7 +11,7 @@ export class AuthService {
     try {
       await auth.signInWithPopup(provider);
     } catch (err) {
-      throw new Error(`Could not sign in: an error occured`);
+      throw err;
     }
   }
 
@@ -57,3 +57,4 @@ export class AuthService {
 }
 
 export * from "./user";
+export * from "./errors";

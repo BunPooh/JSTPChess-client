@@ -1,11 +1,12 @@
 import { computed } from "mobx";
 import { inject, observer } from "mobx-react";
 import { RouterStore } from "mobx-react-router";
+import * as PropTypes from "prop-types";
 import * as React from "react";
 import { routes } from "src/router/config";
 import { RoomStore } from "src/store/RoomStore";
 
-import Chessboard from "../components/Chessboard";
+import Chessboard from "../../components/Chessboard";
 
 interface IComponentState {}
 
@@ -20,6 +21,11 @@ export default class Room extends React.Component<
   IComponentProps,
   IComponentState
 > {
+  public static propTypes = {
+    roomStore: PropTypes.instanceOf(RoomStore).isRequired,
+    routerStore: PropTypes.instanceOf(RouterStore).isRequired
+  };
+
   @computed
   private get pgn() {
     return this.props.roomStore.game.pgn;

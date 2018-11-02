@@ -5,7 +5,7 @@
 
 @media screen and (max-height: 500px) {
   .Home {
-    padding-top: 50px;
+    padding-top: 80px;
   }
 }
 
@@ -16,7 +16,7 @@
 }
 
 .Home .btn-login {
-  width: 90%;
+  width: 100%;
 }
 
 .profile-name {
