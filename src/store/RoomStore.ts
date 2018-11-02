@@ -39,6 +39,7 @@ export class RoomStore {
     this.wsStore = wsStore;
 
     this.wsStore.on("@@rooms/list", e => {
+      this.setRooms([]);
       console.log("list rooms", e, this);
     });
     this.wsStore.on("@@rooms/create", e => {
@@ -53,8 +54,18 @@ export class RoomStore {
   }
 
   @action
-  public setRoom(room?: IRoom) {
+  public setCurrentRoom(room?: IRoom) {
     this.room = room;
+  }
+
+  @action
+  public setRooms(rooms: IRoom[]) {
+    this.rooms = rooms;
+  }
+
+  @action
+  public addRoom(room: IRoom) {
+    this.rooms = this.rooms.concat(room);
   }
 
   @action

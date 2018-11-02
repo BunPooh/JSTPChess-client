@@ -8,6 +8,7 @@
     "chess.js": "^0.10.2",
     "chessboardjs": "^0.0.1",
     "class-transformer": "^0.1.9",
+    "events": "^3.0.0",
     "firebase": "^5.5.3",
     "mobx": "^5.5.0",
     "mobx-react": "^5.2.8",
@@ -30,6 +31,7 @@
     "lint": "tslint 'src/**/*.{ts.tsx}'"
   },
   "devDependencies": {
+    "@types/events": "^1.2.0",
     "@types/jest": "^23.3.2",
     "@types/node": "^10.9.4",
     "@types/prop-types": "^15.5.6",

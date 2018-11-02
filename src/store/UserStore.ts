@@ -1,9 +1,12 @@
 import { plainToClass } from "class-transformer";
+import { EventEmitter } from "events";
 import { action, computed, observable } from "mobx";
 
 import { AuthService, ProviderType, User } from "../services/auth";
 
 const LOCAL_STORAGE_USER = "@@userStore/user";
+
+type UserStoreHook = "connect" | "disconnect";
 
 export class UserStore {
   @observable
@@ -13,8 +16,10 @@ export class UserStore {
   public token?: string;
 
   private authService: AuthService;
+  private hooks: EventEmitter;
 
   constructor(authService: AuthService) {
+    this.hooks = new EventEmitter();
     this.authService = authService;
     this.authService.onAuthStateChanged(async (authUser: User) => {
       console.log("firebase auth service state changed", authUser);
@@ -23,10 +28,27 @@ export class UserStore {
       if (authUser) {
         const token = await this.authService.getTokenId();
         this.setToken(token);
+        this.emit("connect");
       } else {
         this.setToken(undefined);
+        this.emit("disconnect");
       }
     });
+  }
+
+  public on(type: UserStoreHook, fn: () => void) {
+    this.hooks.on(type, fn);
+    // TODO remove
+    // console.log("on ", type, this.token);
+    // if (type === "connect" && this.token) {
+    //   fn();
+    // }
+    // if (type === "disconnect" && !this.token) {
+    //   fn();
+    // }
+  }
+  public off(type: UserStoreHook, fn: () => void) {
+    this.hooks.off(type, fn);
   }
 
   @computed
@@ -65,5 +87,9 @@ export class UserStore {
         this.setUser(plainToClass(User, userPlain));
       } catch (err) {}
     }
+  }
+
+  private emit(type: UserStoreHook) {
+    this.hooks.emit(type);
   }
 }

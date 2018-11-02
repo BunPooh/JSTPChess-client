@@ -14,6 +14,8 @@
   "connection.ws/disconnect": "Déconnecté du serveur",
   "connection.ws/connect_error": "La connection au serveur a échoué",
   "connection.ws/connect_retry": "La connection au serveur a échoué, nouvelle tentative de connection...",
+  "connection.ws/reconnect_failed": "Reconnection au serveur a échoué",
+  "connection.connect": "Connecter",
   "logout": "Déconnection",
   "lobby.title": "Lobby"
 }

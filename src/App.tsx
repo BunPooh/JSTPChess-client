@@ -21,7 +21,7 @@ class App extends React.Component<IComponentProps> {
         <Background />
         <div className="App-content">
           <div className="App-top">
-            {/* <WebsocketConnection /> */}
+            <WebsocketConnection />
             <Navbar />
           </div>
 
