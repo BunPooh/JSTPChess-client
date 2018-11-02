@@ -39,7 +39,8 @@ export class RoomStore {
     this.wsStore = wsStore;
 
     this.wsStore.on("@@rooms/list", e => {
-      this.setRooms([]);
+      console.log("list room inc");
+      this.setRooms(e.rooms);
       console.log("list rooms", e, this);
     });
     this.wsStore.on("@@rooms/create", e => {

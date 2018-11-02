@@ -39,6 +39,16 @@ export default class Lobby extends React.Component<IComponentProps, {}> {
     this.props.routerStore.push(routes.room);
   };
 
+  public createRoom = () => {
+    console.log("create room");
+    this.props.wsStore.emit("@@rooms/create");
+  };
+
+  public listRoom = () => {
+    console.log("emit list");
+    this.props.wsStore.emit("@@rooms/list");
+  };
+
   public componentDidMount() {
     const ws = this.props.wsStore;
     if (ws.connected) {
@@ -49,7 +59,7 @@ export default class Lobby extends React.Component<IComponentProps, {}> {
 
   public onConnect = () => {
     console.log("lobby connected to server");
-    this.props.wsStore.emit("@@room/list");
+    this.props.wsStore.emit("@@rooms/list");
   };
 
   public componentWillUnmount() {
@@ -107,6 +117,8 @@ export default class Lobby extends React.Component<IComponentProps, {}> {
             )}
 
             <button onClick={this.enterRoom}>Enter room (local)</button>
+            <button onClick={this.createRoom}>Create</button>
+            <button onClick={this.listRoom}>List</button>
             <Link to="/">Home</Link>
           </div>
         </Card>
