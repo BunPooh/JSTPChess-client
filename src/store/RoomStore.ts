@@ -1,18 +1,17 @@
 import { action, observable } from "mobx";
 
-import { IUser } from "../services/auth";
 import { WsStore } from "./WsStore";
 
 export type PlayerColor = "w" | "b";
 
 export interface IPlayer {
-  user: IUser;
-  color: PlayerColor;
+  id: string;
 }
 
 export interface IRoom {
   id: string;
-  players: IPlayer[];
+  creator: IPlayer;
+  opponent?: IPlayer;
 }
 
 export interface IChessGame {
@@ -22,63 +21,91 @@ export interface IChessGame {
 
 export class RoomStore {
   @observable
-  public rooms: IRoom[] = [];
+  public _rooms: IRoom[] = [];
 
   @observable
-  public room?: IRoom;
+  public _room?: IRoom;
 
   @observable
-  public game: IChessGame = {
+  public _game: IChessGame = {
     pgn: undefined,
     status: undefined
   };
+
+  public get rooms() {
+    return this._rooms;
+  }
+
+  public get room() {
+    return this._room;
+  }
+
+  public get game() {
+    return this._game;
+  }
 
   private wsStore: WsStore;
 
   constructor(wsStore: WsStore) {
     this.wsStore = wsStore;
 
-    this.wsStore.on("@@rooms/list", e => {
-      console.log("list room inc");
-      this.setRooms(e.rooms);
-      console.log("list rooms", e, this);
+    this.wsStore.on("@@rooms/list", (data: IRoom[]) => {
+      this.setRooms(data);
     });
-    this.wsStore.on("@@rooms/create", e => {
-      console.log("create room", e, this);
+    this.wsStore.on("@@rooms/create", (data: IRoom) => {
+      this.setCurrentRoom(data);
     });
     this.wsStore.on("@@rooms/join", e => {
-      console.log("join room", e, this);
+      console.log("join room", e);
     });
+    this.wsStore.on("@@rooms/quit", e => {
+      this.setCurrentRoom(undefined);
+    });
+
     this.wsStore.on("@@rooms/updateGame", e => {
-      console.log("update game", e, this);
+      console.log("update game", e);
     });
   }
 
-  @action
-  public setCurrentRoom(room?: IRoom) {
-    this.room = room;
+  public listRooms() {
+    this.wsStore.emit("@@rooms/list");
   }
-
-  @action
-  public setRooms(rooms: IRoom[]) {
-    this.rooms = rooms;
+  public createRoom() {
+    this.wsStore.emit("@@rooms/create");
   }
-
-  @action
-  public addRoom(room: IRoom) {
-    this.rooms = this.rooms.concat(room);
+  public joinRoom(roomId: string) {
+    this.wsStore.emit("@@rooms/join", roomId);
   }
-
-  @action
-  public setGame(game: IChessGame) {
-    this.game = game;
+  public quitRoom() {
+    this.setCurrentRoom(undefined);
+    // this.wsStore.emit("@@rooms/quit");
   }
 
   @action
   public updateGame(game: Partial<IChessGame>) {
-    this.game = {
+    this._game = {
       ...this.game,
       ...game
     };
+  }
+
+  @action
+  private setCurrentRoom(room?: IRoom) {
+    this._room = room;
+  }
+
+  @action
+  private setRooms(rooms: IRoom[]) {
+    this._rooms = rooms;
+  }
+
+  @action
+  private addRoom(room: IRoom) {
+    this._rooms = this._rooms.concat(room);
+  }
+
+  @action
+  private setGame(game: IChessGame) {
+    this._game = game;
   }
 }

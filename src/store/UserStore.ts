@@ -22,8 +22,6 @@ export class UserStore {
     this.hooks = new EventEmitter();
     this.authService = authService;
     this.authService.onAuthStateChanged(async (authUser: User) => {
-      console.log("firebase auth service state changed", authUser);
-
       this.setUser(authUser);
       if (authUser) {
         const token = await this.authService.getTokenId();
@@ -38,14 +36,6 @@ export class UserStore {
 
   public on(type: UserStoreHook, fn: () => void) {
     this.hooks.on(type, fn);
-    // TODO remove
-    // console.log("on ", type, this.token);
-    // if (type === "connect" && this.token) {
-    //   fn();
-    // }
-    // if (type === "disconnect" && !this.token) {
-    //   fn();
-    // }
   }
   public off(type: UserStoreHook, fn: () => void) {
     this.hooks.off(type, fn);

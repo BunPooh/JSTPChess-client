@@ -14,6 +14,7 @@ interface IComponentProps {
   playerColor: PlayerType;
   onChangePositions: (positions: string) => void;
   onChangeStatus?: (status: ChessboardStatus) => void;
+  onMovePiece?: (from: string, to: string) => void;
 }
 
 interface IComponentState {
@@ -180,6 +181,10 @@ export default class Chessboard extends React.Component<
 
   private onDrop = (source: string, target: string) => {
     this.removeGreySquares();
+
+    if (this.props.onMovePiece) {
+      this.props.onMovePiece(source, target);
+    }
 
     // see if the move is legal
     const move = this.game.move({

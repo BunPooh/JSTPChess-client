@@ -8,6 +8,7 @@ import * as PropTypes from "prop-types";
 import * as React from "react";
 import { FormattedMessage } from "react-intl";
 
+import * as config from "../config";
 import { UserStore } from "../store/UserStore";
 import { WsStore } from "../store/WsStore";
 
@@ -61,19 +62,16 @@ export class WebsocketConnection extends React.Component<IComponentProps> {
   }
 
   private onConnect = () => {
-    console.log("websocket on connect");
     this.props.wsStore!.connect(
-      "http://localhost:3001",
+      config.apiUrl,
       {
         query: {
           token: this.props.userStore!.token
-        },
-        reconnectionAttempts: 2
+        }
       }
     );
   };
   private onDisconnect = () => {
-    console.log("websocket on disconnect");
     this.props.wsStore!.disconnect();
   };
 }

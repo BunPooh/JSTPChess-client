@@ -1,4 +1,4 @@
-import { action, computed, observable } from "mobx";
+import { action, observable } from "mobx";
 import { connect } from "socket.io-client";
 
 interface ISocketEvent {
@@ -11,15 +11,22 @@ export class WsStore {
   public socket?: SocketIOClient.Socket;
 
   @observable
-  public connectionError?: string;
+  public _connectionError?: string;
 
   @observable
-  public reconnectFailed: boolean = false;
+  public _reconnectFailed: boolean = false;
 
-  // public connected: boolean = false
-  @computed
+  @observable
+  public _connected: boolean = false;
+
+  public get connectionError() {
+    return this._connectionError;
+  }
   public get connected() {
-    return this.socket ? this.socket.connected : false;
+    return this._connected;
+  }
+  public get reconnectFailed() {
+    return this._reconnectFailed;
   }
 
   private events: ISocketEvent[] = [];
@@ -28,9 +35,9 @@ export class WsStore {
   public connect(path: string, options: SocketIOClient.ConnectOpts = {}) {
     const defaultOptions: SocketIOClient.ConnectOpts = {
       transports: ["websocket"],
-      reconnectionDelay: 2000,
-      reconnectionDelayMax: 10000,
-      reconnectionAttempts: 3
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 3000,
+      reconnectionAttempts: 2
     };
     this.socket = connect(
       path,
@@ -40,18 +47,22 @@ export class WsStore {
       }
     );
 
-    this.reconnectFailed = false;
+    this.setConnected(false);
+    this.setReconnectFailed(false);
     this.setConnectionError(undefined);
 
     this.socket.on("error", () => {});
     this.socket.on("connect", (e: any) => {
       this.setConnectionError(undefined);
+      this.setConnected(true);
     });
     this.socket.on("disconnect", (e: any) => {
       this.setConnectionError("ws/disconnect");
+      this.setConnected(false);
     });
     this.socket.on("connect_error", (e: any) => {
       this.setConnectionError("ws/connect_error");
+      this.setConnected(false);
     });
     this.socket.on("connect_timeout", (e: any) => {
       this.setConnectionError("ws/connect_error");
@@ -62,7 +73,7 @@ export class WsStore {
     this.socket.on("reconnect_error", () => {});
     this.socket.on("reconnect_failed", () => {
       this.setConnectionError("ws/reconnect_failed");
-      this.reconnectFailed = true;
+      this.setReconnectFailed(false);
     });
 
     this.events.forEach(event => {
@@ -112,7 +123,17 @@ export class WsStore {
   }
 
   @action
-  public setConnectionError(error?: string) {
-    this.connectionError = error;
+  private setConnectionError(error?: string) {
+    this._connectionError = error;
+  }
+
+  @action
+  private setReconnectFailed(status: boolean) {
+    this._reconnectFailed = status;
+  }
+
+  @action
+  private setConnected(status: boolean) {
+    this._connected = status;
   }
 }

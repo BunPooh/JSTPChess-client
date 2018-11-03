@@ -17,5 +17,7 @@
   "connection.ws/reconnect_failed": "Reconnection au serveur a échoué",
   "connection.connect": "Connecter",
   "logout": "Déconnection",
-  "lobby.title": "Lobby"
+  "lobby.title": "Lobby",
+  "lobby.waiting": "En attente d'un joueur",
+  "lobby.playing": "En cours de jeu avec "
 }

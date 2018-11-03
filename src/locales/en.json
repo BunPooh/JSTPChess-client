@@ -18,5 +18,7 @@
   "connection.connect": "Connect",
   "connection.required": "You need to be connected to the server",
   "logout": "Logout",
-  "lobby.title": "Lobby"
+  "lobby.title": "Lobby",
+  "lobby.waiting": "Waiting for player",
+  "lobby.playing": "Playing with "
 }
