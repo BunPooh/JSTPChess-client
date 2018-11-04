@@ -117,7 +117,6 @@ export class WsStore {
   public disconnect() {
     if (this.socket) {
       this.socket.disconnect();
-      console.log("disconnect");
       this.socket = undefined;
     }
   }

@@ -32,8 +32,10 @@ export default class LobbyRoom extends React.Component<IComponentProps> {
   public render() {
     const room = this.props.roomStore.room!;
     const user = this.props.userStore.user!;
-    const opponent =
-      room.creator!.id === user.uid ? room.opponent! : room.creator;
+    const isCreator = room.creator!.id === user.uid;
+    const opponent = isCreator ? room.opponent! : room.creator;
+
+    const color = isCreator ? "w" : "b";
 
     return (
       <div>
@@ -42,6 +44,7 @@ export default class LobbyRoom extends React.Component<IComponentProps> {
         </h2>
 
         <div>
+          <div>You are {color === "w" ? "White" : "Black"}</div>
           <div>{this.status}</div>
           <div>
             <Chessboard
@@ -67,15 +70,17 @@ export default class LobbyRoom extends React.Component<IComponentProps> {
 
   @computed
   private get pgn() {
-    return this.props.roomStore!.game.pgn;
+    return this.props.roomStore.game.pgn;
   }
 
   @computed
   private get status() {
-    return this.props.roomStore!.game.status;
+    return this.props.roomStore.game.status;
   }
 
-  private onMovePiece = (from: string, to: string) => {};
+  private onMovePiece = (from: string, to: string) => {
+    this.props.roomStore.movePiece(from, to);
+  };
 
   private onChangePositions = (pgn: string) => {
     this.props.roomStore!.updateGame({

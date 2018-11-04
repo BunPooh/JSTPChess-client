@@ -77,11 +77,9 @@ export default class Chessboard extends React.Component<
     // When we received a position that is not the current one, we load it
     if (this.chessboard) {
       if (this.props.pgn) {
-        // console.log("sync board with component");
         this.game.load_pgn(this.props.pgn);
         this.chessboard.position(this.game.fen());
       } else {
-        // console.log("reset board");
         this.game.reset();
         this.chessboard.start();
       }

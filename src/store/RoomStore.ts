@@ -52,18 +52,18 @@ export class RoomStore {
     this.wsStore.on("@@rooms/list", (data: IRoom[]) => {
       this.setRooms(data);
     });
-    this.wsStore.on("@@rooms/create", (data: IRoom) => {
-      this.setCurrentRoom(data);
+    this.wsStore.on("@@rooms/set", (data: IRoom & { chessBoard: string }) => {
+      this.setCurrentRoom({
+        id: data.id,
+        creator: data.creator,
+        opponent: data.opponent
+      });
+      this.updateGame({
+        pgn: data.chessBoard
+      });
     });
-    this.wsStore.on("@@rooms/join", e => {
-      console.log("join room", e);
-    });
-    this.wsStore.on("@@rooms/quit", e => {
+    this.wsStore.on("@@rooms/leave", e => {
       this.setCurrentRoom(undefined);
-    });
-
-    this.wsStore.on("@@rooms/updateGame", e => {
-      console.log("update game", e);
     });
   }
 
@@ -77,8 +77,13 @@ export class RoomStore {
     this.wsStore.emit("@@rooms/join", roomId);
   }
   public quitRoom() {
-    this.setCurrentRoom(undefined);
-    // this.wsStore.emit("@@rooms/quit");
+    this.wsStore.emit("@@rooms/leave");
+  }
+  public movePiece(from: string, to: string) {
+    this.wsStore.emit("@@chess/move", {
+      from,
+      to
+    });
   }
 
   @action
@@ -97,15 +102,5 @@ export class RoomStore {
   @action
   private setRooms(rooms: IRoom[]) {
     this._rooms = rooms;
-  }
-
-  @action
-  private addRoom(room: IRoom) {
-    this._rooms = this._rooms.concat(room);
-  }
-
-  @action
-  private setGame(game: IChessGame) {
-    this._game = game;
   }
 }
