@@ -14,6 +14,7 @@ interface IComponentProps {
   playerColor: PlayerType;
   onChangePositions: (positions: string) => void;
   onChangeStatus?: (status: ChessboardStatus) => void;
+  onMovePiece?: (from: string, to: string) => void;
 }
 
 interface IComponentState {
@@ -76,11 +77,9 @@ export default class Chessboard extends React.Component<
     // When we received a position that is not the current one, we load it
     if (this.chessboard) {
       if (this.props.pgn) {
-        // console.log("sync board with component");
         this.game.load_pgn(this.props.pgn);
         this.chessboard.position(this.game.fen());
       } else {
-        // console.log("reset board");
         this.game.reset();
         this.chessboard.start();
       }
@@ -180,6 +179,10 @@ export default class Chessboard extends React.Component<
 
   private onDrop = (source: string, target: string) => {
     this.removeGreySquares();
+
+    if (this.props.onMovePiece) {
+      this.props.onMovePiece(source, target);
+    }
 
     // see if the move is legal
     const move = this.game.move({

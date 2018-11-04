@@ -1,4 +1,4 @@
-import { Button, Dropdown, Menu, message } from "antd";
+import { Button, Dropdown, Menu } from "antd";
 import { inject } from "mobx-react";
 import * as PropTypes from "prop-types";
 import * as React from "react";
